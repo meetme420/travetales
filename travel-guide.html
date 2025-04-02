@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Tales - Your Journey Begins Here</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/santorini.webp') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .guide-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .guide-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .guide-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .guide-card:hover .guide-image {
+            transform: scale(1.1);
+        }
+
+        .guide-content {
+            padding: 2rem;
+        }
+
+        .guide-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .guide-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .guide-rating {
+            color: #f6ad55;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .guide-container {
+                padding: 1rem;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #2d3748;
+            margin: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0.5rem auto;
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .expand-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(45deg);
+        }
+
+        .tip-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, margin 0.5s ease;
+            margin-top: 0;
+        }
+
+        .expanded .tip-details {
+            max-height: 1000px;
+            margin-top: 1.5rem;
+        }
+
+        .tip-details h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tip-details p {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .tip-details ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-details li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .tip-title {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .tip-content {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .destination-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .destination-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1.5rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .destination-item:hover .destination-overlay {
+            transform: translateY(0);
+        }
+
+        .destination-item:hover .destination-image {
+            transform: scale(1.1);
+        }
+
+        /* Destination Categories Styles */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-item {
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: scale(1.03);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 30%, transparent);
+            padding: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .category-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .category-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .category-btn {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover .category-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Testimonials Styles */
+        .testimonial-container {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            position: relative;
+        }
+
+        .testimonial-slider {
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            border-radius: 20px;
+        }
+
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .testimonial-content {
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .testimonial-img {
+            flex: 0 0 40%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            mix-blend-mode: multiply;
+        }
+
+        .testimonial-text {
+            flex: 0 0 60%;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .testimonial-text p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2d3748;
+        }
+
+        .testimonial-location {
+            color: #718096;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-rating {
+            color: #f6ad55;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .testimonial-prev, .testimonial-next {
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3748;
+        }
+
+        .testimonial-prev:hover, .testimonial-next:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            margin: 0 1rem;
+        }
+
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e0;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+
+        /* Gallery Styles */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 200px;
+            grid-auto-flow: dense;
+            gap: 1rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+
+        .gallery-item.custom-size {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item.custom-height {
+            height: 600px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-caption {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .gallery-expand {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: #2d3748;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-expand:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        #modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: white;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .modal-prev, .modal-next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            -webkit-user-select: none;
+            user-select: none;
+            border: none;
+            background: transparent;
+        }
+
+        .modal-next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .modal-prev:hover, .modal-next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Social Media Sharing */
+        .social-share {
+            text-align: center;
+            padding: 3rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-share-title {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            -webkit-box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .social-btn:hover {
+            -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+            -webkit-box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        .twitter {
+            background: #1da1f2;
+        }
+
+        .pinterest {
+            background: #bd081c;
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+
+        .whatsapp {
+            background: #25d366;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .testimonial-content {
+                flex-direction: column;
+            }
+            
+            .testimonial-img, .testimonial-text {
+                flex: 0 0 100%;
+            }
+            
+            .testimonial-img {
+                height: 200px;
+            }
+            
+            .testimonial-text {
+                padding: 1.5rem;
+            }
+            
+            .testimonial-slider {
+                height: 500px;
+            }
+            
+            .gallery-item.wide, .gallery-item.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+        }
+
+        /* Category specific backgrounds */
+        .beach-category {
+            background-image: url('images/beach-category.jpg');
+        }
+        
+        .mountain-category {
+            background-image: url('images/mountain-category.jpg');
+        }
+        
+        .city-category {
+            background-image: url('images/city-category.jpg');
+        }
+        
+        .adventure-category {
+            background-image: url('images/adventure-category.jpg');
+        }
+        
+        .food-category {
+            background-image: url('images/food-category.jpg');
+        }
+        
+        .wildlife-category {
+            background-image: url('images/wildlife-category.jpg');
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Travel Tales</h1>
+        <p>Where Every Journey Tells a Story</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Where would you like to explore?">
+        </div>
+    </header>
+    
+    <div class="guide-container">
+        <div class="guide-card">
+            <picture>
+                <source srcset="images/paris.webp" type="image/webp">
+                <source srcset="images/paris.jpg" type="image/jpeg">
+                <img src="images/paris.jpg" alt="Paris" class="guide-image">
+            </picture>
+            <div class="guide-content">
+                <h2 class="guide-title">A Tale of Paris</h2>
+                <p class="guide-description">Experience the romance of the City of Light. From the iconic Eiffel Tower to charming cafés and world-class museums.</p>
+                <div class="guide-meta">
+                    <span class="guide-rating">★★★★★ 4.9</span>
+                    <span>3 Days Guide</span>
+                </div>
+                <br>
+                <a href="guides/paris.html" class="explore-btn">Explore Guide</a>
+            </div>
+        </div>
+
+        <div class="guide-card">
+            <picture>
+                <source srcset="images/tokyo.webp" type="image/webp">
+                <img src="images/tokyo.webp" alt="Tokyo" class="guide-image">
+            </picture>
+            <div class="guide-content">
+                <h2 class="guide-title">Tokyo Stories</h2>
+                <p class="guide-description">Dive into a fascinating blend of ultra-modern technology and traditional culture in Japan's dynamic capital.</p>
+                <div class="guide-meta">
+                    <span class="guide-rating">★★★★★ 4.8</span>
+                    <span>5 Days Guide</span>
+                </div>
+                <br>
+                <a href="guides/tokyo.html" class="explore-btn">Explore Guide</a>
+            </div>
+        </div>
+
+        <div class="guide-card">
+            <picture>
+                <source srcset="images/santorini.webp" type="image/webp">
+                <img src="images/santorini.webp" alt="Santorini" class="guide-image">
+            </picture>
+            <div class="guide-content">
+                <h2 class="guide-title">Santorini Chronicles</h2>
+                <p class="guide-description">Discover the magic of white-washed buildings, blue domes, and the most spectacular sunsets in the Mediterranean.</p>
+                <div class="guide-meta">
+                    <span class="guide-rating">★★★★★ 4.9</span>
+                    <span>4 Days Guide</span>
+                </div>
+                <br>
+                <a href="guides/santorini.html" class="explore-btn">Explore Guide</a>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Essential Travel Tips</h2>
+    <div class="tips-container">
+        <div class="tip-card">
+            <div class="tip-icon">✈️</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Flight Booking Tips</h3>
+            <p class="tip-content">
+                • Book flights 3-4 months in advance<br>
+                • Use incognito mode when searching<br>
+                • Be flexible with dates<br>
+                • Sign up for price alerts
+            </p>
+            <div class="tip-details">
+                <h4>Best Times to Book</h4>
+                <p>Most experts suggest booking international flights 3-6 months ahead, while domestic flights are typically best booked 1-3 months before travel.</p>
+                
+                <h4>Price Tracking Tools</h4>
+                <ul>
+                    <li><strong>Google Flights</strong> - Set alerts for specific routes</li>
+                    <li><strong>Skyscanner</strong> - "Whole Month" view shows cheapest days</li>
+                    <li><strong>Hopper</strong> - Predicts whether prices will rise or fall</li>
+                </ul>
+                
+                <h4>Insider Tricks</h4>
+                <p>Consider booking one-way flights separately or using "hidden city ticketing" for potential savings, but be aware of airline policies. Always clear your cookies or use incognito mode when repeatedly searching for the same route.</p>
+                
+                <h4>Loyalty Programs Worth Joining</h4>
+                <p>Even infrequent travelers should join airline loyalty programs as points don't always expire and can add up to free flights over time.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon">🏨</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Accommodation Hacks</h3>
+            <p class="tip-content">
+                • Read recent reviews carefully<br>
+                • Book with free cancellation<br>
+                • Contact hosts directly<br>
+                • Check location safety
+            </p>
+            <div class="tip-details">
+                <h4>Understanding Reviews</h4>
+                <p>Focus on reviews from the last 6 months as properties can change management or condition. Pay special attention to mentions of cleanliness, noise levels, and staff helpfulness.</p>
+                
+                <h4>Negotiation Strategies</h4>
+                <p>For longer stays (1+ week), message hosts directly to negotiate discounted rates. Many are willing to offer 10-20% off for guaranteed longer bookings.</p>
+                
+                <h4>Alternative Accommodations</h4>
+                <ul>
+                    <li><strong>Home exchanges</strong> - Stay for free by swapping homes</li>
+                    <li><strong>House sitting</strong> - Free accommodation in exchange for pet care</li>
+                    <li><strong>Monasteries/Temples</strong> - Unique, affordable stays in many countries</li>
+                </ul>
+                
+                <h4>Safety Checklist</h4>
+                <p>Always check emergency exits upon arrival, verify the neighborhood safety with recent reviews, and have offline maps with your accommodation marked.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon">💰</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Budget Management</h3>
+            <p class="tip-content">
+                • Set daily spending limits<br>
+                • Use local transportation<br>
+                • Cook some meals yourself<br>
+                • Find free attractions
+            </p>
+            <div class="tip-details">
+                <h4>Effective Budgeting Method</h4>
+                <p>Use the 50-30-20 rule for travel: 50% on accommodation, 30% on food and activities, and 20% as a buffer for unexpected expenses or splurges.</p>
+                
+                <h4>Currency Exchange Tips</h4>
+                <p>Avoid airport currency exchanges and hotel currency services which typically offer the worst rates. Instead, use ATMs at banks or credit cards with no foreign transaction fees.</p>
+                
+                <h4>Free Activities in Major Cities</h4>
+                <ul>
+                    <li><strong>Free Museum Days</strong> - Many museums offer free entry on specific days</li>
+                    <li><strong>Walking Tours</strong> - Many cities have free walking tours (tip-based)</li>
+                    <li><strong>Public Parks & Gardens</strong> - Often overlooked but beautiful attractions</li>
+                </ul>
+                
+                <h4>Food-Saving Strategies</h4>
+                <p>Visit local markets and prepare picnic lunches, eat your largest meal at lunch when prices are lower, and use apps like TooGoodToGo to find discounted restaurant food.</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Popular Destinations</h2>
+    <div class="destination-grid">
+        <div class="destination-item">
+            <picture>
+                <source srcset="images/maasai-mara.webp" type="image/webp">
+                <img src="images/maasai-mara.webp" alt="Maasai Mara - African wildlife and savanna" class="destination-image" loading="lazy">
+            </picture>
+            <div class="destination-overlay">
+                <h3>Maasai Mara, Kenya</h3>
+                <p>Experience the great wildebeest migration</p>
+            </div>
+        </div>
+        <div class="destination-item">
+            <picture>
+                <source srcset="images/rome.webp" type="image/webp">
+                <img src="images/rome.webp" alt="Rome" class="destination-image" loading="lazy">
+            </picture>
+            <div class="destination-overlay">
+                <h3>Rome, Italy</h3>
+                <p>Eternal city of history and art</p>
+            </div>
+        </div>
+        <div class="destination-item">
+            <picture>
+                <source srcset="images/kyoto.webp" type="image/webp">
+                <img src="images/kyoto.webp" alt="Kyoto" class="destination-image" loading="lazy">
+            </picture>
+            <div class="destination-overlay">
+                <h3>Kyoto, Japan</h3>
+                <p>Traditional Japanese culture</p>
+            </div>
+        </div>
+        <div class="destination-item">
+            <picture>
+                <source srcset="images/maldives.webp" type="image/webp">
+                <img src="images/maldives.webp" alt="Maldives" class="destination-image" loading="lazy">
+            </picture>
+            <div class="destination-overlay">
+                <h3>Maldives</h3>
+                <p>Paradise on Earth</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Travel Guides & Resources</h2>
+    <div class="tips-container">
+        <div class="tip-card">
+            <div class="tip-icon">📱</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Essential Travel Apps</h3>
+            <p class="tip-content">
+                • Maps.me for offline navigation<br>
+                • Google Translate<br>
+                • XE Currency Converter<br>
+                • TripIt for itinerary planning
+            </p>
+            <div class="tip-details">
+                <h4>Navigation Apps</h4>
+                <ul>
+                    <li><strong>Maps.me</strong> - Fully offline maps with detailed walking paths and points of interest</li>
+                    <li><strong>Citymapper</strong> - Best for public transportation in major cities</li>
+                    <li><strong>Waze</strong> - Real-time traffic updates and road alerts</li>
+                </ul>
+                
+                <h4>Language Assistance</h4>
+                <p>Google Translate now offers camera translation - simply point your camera at menus, signs, or documents for instant translation. Download language packs before your trip for offline use.</p>
+                
+                <h4>Money Management</h4>
+                <ul>
+                    <li><strong>XE Currency</strong> - Real-time currency conversion, works offline after initial setup</li>
+                    <li><strong>Splitwise</strong> - Track and split expenses with travel companions</li>
+                    <li><strong>Trail Wallet</strong> - Track your daily travel budget with categories</li>
+                </ul>
+                
+                <h4>Travel Organization</h4>
+                <p>TripIt automatically organizes your travel documents by forwarding confirmation emails to plans@tripit.com. The pro version offers real-time flight alerts and seat tracking.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon">🎒</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Packing Essentials</h3>
+            <p class="tip-content">
+                • Universal power adapter<br>
+                • Portable charger<br>
+                • First-aid kit<br>
+                • Weather-appropriate clothing
+            </p>
+            <div class="tip-details">
+                <h4>Electronics Essentials</h4>
+                <p>Invest in a good universal adapter with USB ports. The best ones include surge protection and work in 150+ countries with US/EU/UK/AU compatibility.</p>
+                
+                <h4>Health & Safety Items</h4>
+                <ul>
+                    <li><strong>Personalized First-Aid Kit</strong> - Include prescription medications, pain relievers, antihistamines, band-aids, antiseptic wipes, and rehydration salts</li>
+                    <li><strong>Travel Insurance Info</strong> - Physical and digital copies of your policy</li>
+                    <li><strong>Photocopies</strong> - Keep copies of your passport and important documents separate from originals</li>
+                </ul>
+                
+                <h4>Climate-Specific Packing</h4>
+                <p>For tropical climates, pack lightweight, moisture-wicking clothes and insect repellent. For cold destinations, focus on layering rather than single bulky items, and always pack a waterproof outer layer.</p>
+                
+                <h4>Packing Techniques</h4>
+                <p>Rolling clothes saves space but can increase wrinkles. Use packing cubes to organize and compress clothing. Place heavier items at the bottom of your suitcase near the wheels.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon">📝</div>
+            <div class="expand-icon">+</div>
+            <h3 class="tip-title">Pre-Trip Checklist</h3>
+            <p class="tip-content">
+                • Check visa requirements<br>
+                • Get travel insurance<br>
+                • Make copies of documents<br>
+                • Inform your bank
+            </p>
+            <div class="tip-details">
+                <h4>Documentation Timeline</h4>
+                <p>3 months before: Check passport validity (many countries require 6 months validity beyond your return date). 2 months before: Apply for necessary visas. 1 month before: Purchase travel insurance.</p>
+                
+                <h4>Banking Preparations</h4>
+                <ul>
+                    <li><strong>Notify banks</strong> - Inform credit card companies about travel dates and destinations</li>
+                    <li><strong>ATM strategy</strong> - Research partner banks at your destination to avoid fees</li>
+                    <li><strong>Emergency cash</strong> - Bring $100-200 USD in small denominations as emergency backup</li>
+                </ul>
+                
+                <h4>Home Preparations</h4>
+                <p>Hold mail delivery, arrange pet/plant care, set light timers, unplug non-essential appliances, and check smoke detector batteries.</p>
+                
+                <h4>Health Precautions</h4>
+                <p>Check required vaccinations at least 8 weeks before travel on the CDC or WHO websites. Consider bringing common antibiotics if traveling to remote areas (consult your doctor first).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <h2 class="section-title">Traveler Stories</h2>
+    <div class="testimonial-container">
+        <div class="testimonial-slider">
+            <div class="testimonial-slide active">
+                <div class="testimonial-content">
+                    <div class="testimonial-img">
+                        <img src="images/tokyo.webp" alt="Amara Okafor">
+                    </div>
+                    <div class="testimonial-text">
+                        <p>"Travel Tales made planning my trip to Japan so much easier! Their Tokyo guide helped me discover hidden gems I would have otherwise missed."</p>
+                        <div class="testimonial-author">Amara Okafor</div>
+                        <div class="testimonial-location">Lagos, Nigeria</div>
+                        <div class="testimonial-rating">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="testimonial-content">
+                    <div class="testimonial-img">
+                        <img src="images/paris.webp" alt="Miguel Santana">
+                    </div>
+                    <div class="testimonial-text">
+                        <p>"The tips about local transportation saved me hundreds on my European tour. I've been recommending Travel Tales to all my friends!"</p>
+                        <div class="testimonial-author">Miguel Santana</div>
+                        <div class="testimonial-location">Madrid, Spain</div>
+                        <div class="testimonial-rating">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-slide">
+                <div class="testimonial-content">
+                    <div class="testimonial-img">
+                        <img src="images/santorini.webp" alt="Emma Chen">
+                    </div>
+                    <div class="testimonial-text">
+                        <p>"As a solo female traveler, the safety tips were invaluable. My trip to Bali was incredible and stress-free thanks to Travel Tales' guidance."</p>
+                        <div class="testimonial-author">Emma Chen</div>
+                        <div class="testimonial-location">Toronto, Canada</div>
+                        <div class="testimonial-rating">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-controls">
+            <button class="testimonial-prev">❮</button>
+            <div class="testimonial-dots">
+                <span class="testimonial-dot active" data-index="0"></span>
+                <span class="testimonial-dot" data-index="1"></span>
+                <span class="testimonial-dot" data-index="2"></span>
+            </div>
+            <button class="testimonial-next">❯</button>
+        </div>
+    </div>
+
+    <!-- Photo Gallery Section -->
+    <h2 class="section-title">Travel Gallery</h2>
+    <div class="gallery-container">
+        <div class="gallery-item tall custom-height">
+            <img src="images/serengeti-national-park.webp" alt="Serengeti National Park" class="gallery-img">
+            <div class="gallery-overlay">
+                <span class="gallery-caption">Serengeti National Park, Tanzania</span>
+                <button class="gallery-expand">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="images/angkor-wat.webp" alt="Ancient temple" class="gallery-img">
+            <div class="gallery-overlay">
+                <span class="gallery-caption">Angkor Wat, Cambodia</span>
+                <button class="gallery-expand">+</button>
+            </div>
+        </div>
+        <div class="gallery-item wide">
+            <img src="images/venice-canals.webp" alt="Venice canals" class="gallery-img">
+            <div class="gallery-overlay">
+                <span class="gallery-caption">Venice Canals, Italy</span>
+                <button class="gallery-expand">+</button>
+            </div>
+        </div>
+        <div class="gallery-item wide tall">
+            <img src="images/northern-lights.webp" alt="Northern Lights" class="gallery-img">
+            <div class="gallery-overlay">
+                <span class="gallery-caption">Northern Lights in Iceland</span>
+                <button class="gallery-expand">+</button>
+            </div>
+        </div>
+        <div class="gallery-item tall">
+            <img src="images/cape-town.webp" alt="Cape Town coastal view" class="gallery-img">
+            <div class="gallery-overlay">
+                <span class="gallery-caption">Cape Town, South Africa</span>
+                <button class="gallery-expand">+</button>
+            </div>
+        </div>
+    </div>
+    <div id="gallery-modal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div id="modal-caption"></div>
+        <button class="modal-prev">❮</button>
+        <button class="modal-next">❯</button>
+    </div>
+
+    <!-- Social Media Sharing -->
+    <div class="social-share">
+        <div class="social-share-title">Share Your Journey</div>
+        <div class="social-buttons">
+            <a href="#" class="social-btn facebook" aria-label="Share on Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="true"><path fill="currentColor" d="M12 2.04a10.03 10.03 0 0 0-1.56 19.92v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"></path></svg>
+            </a>
+            <a href="#" class="social-btn twitter" aria-label="Share on Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="true"><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"></path></svg>
+            </a>
+            <a href="#" class="social-btn pinterest" aria-label="Share on Pinterest">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="true"><path fill="currentColor" d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10A10 10 0 0 0 12 2 10 10 0 0 0 2 12c0 4.25 2.67 7.9 6.44 9.34-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41.86 0 1.26.63 1.26 1.44 0 .86-.57 2.09-.86 3.27-.17.98.52 1.84 1.52 1.84 1.78 0 3.16-1.9 3.16-4.58 0-2.4-1.72-4.04-4.19-4.04-2.82 0-4.48 2.1-4.48 4.31 0 .86.28 1.73.74 2.3.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11-1.28-.56-2.02-2.38-2.02-3.85 0-3.16 2.24-6.03 6.56-6.03 3.44 0 6.12 2.47 6.12 5.75 0 3.44-2.13 6.2-5.18 6.2-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7v-.03z"></path></svg>
+            </a>
+            <a href="#" class="social-btn instagram" aria-label="Share on Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="true"><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+            </a>
+            <a href="#" class="social-btn whatsapp" aria-label="Share on WhatsApp">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-hidden="true"><path fill="currentColor" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24zM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.21 1.76 2.69 4.25 3.77 1.73.75 2.41.82 2.91.69.62-.16 1.38-.56 1.58-1.1.19-.53.19-.99.12-1.09-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.02-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.04-.47-.04z"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipCards = document.querySelectorAll('.tip-card');
+            
+            tipCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+            });
+
+            // Testimonials slider
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            const prevBtn = document.querySelector('.testimonial-prev');
+            const nextBtn = document.querySelector('.testimonial-next');
+            let currentIndex = 0;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                currentIndex = (index + slides.length) % slides.length;
+                
+                slides[currentIndex].classList.add('active');
+                dots[currentIndex].classList.add('active');
+            }
+
+            prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+            nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    showSlide(parseInt(this.getAttribute('data-index')));
+                });
+            });
+
+            // Auto rotate testimonials
+            setInterval(() => showSlide(currentIndex + 1), 5000);
+
+            // Gallery and Modal
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('gallery-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalCaption = document.getElementById('modal-caption');
+            const closeBtn = document.querySelector('.modal-close');
+            const modalPrev = document.querySelector('.modal-prev');
+            const modalNext = document.querySelector('.modal-next');
+            let currentImgIndex = 0;
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('.gallery-img');
+                    const caption = this.querySelector('.gallery-caption').textContent;
+                    
+                    modal.style.display = 'block';
+                    modalImg.src = img.src;
+                    modalCaption.textContent = caption;
+                    currentImgIndex = index;
+                });
+            });
+
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            modalPrev.addEventListener('click', function() {
+                showModalImage((currentImgIndex - 1 + galleryItems.length) % galleryItems.length);
+            });
+
+            modalNext.addEventListener('click', function() {
+                showModalImage((currentImgIndex + 1) % galleryItems.length);
+            });
+
+            function showModalImage(index) {
+                const img = galleryItems[index].querySelector('.gallery-img');
+                const caption = galleryItems[index].querySelector('.gallery-caption').textContent;
+                
+                modalImg.src = img.src;
+                modalCaption.textContent = caption;
+                currentImgIndex = index;
+            }
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (modal.style.display === 'block') {
+                    if (e.key === 'ArrowLeft') {
+                        showModalImage((currentImgIndex - 1 + galleryItems.length) % galleryItems.length);
+                    } else if (e.key === 'ArrowRight') {
+                        showModalImage((currentImgIndex + 1) % galleryItems.length);
+                    } else if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
